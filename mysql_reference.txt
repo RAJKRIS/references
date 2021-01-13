@@ -1,0 +1,73 @@
+# simple SELECT Query
+
+SELECT * FROM Customers;
+SELECT id FROM Customers;
+SELECT id FROM Customers WHERE Country='US';
+
+
+# SELECT query with DISTINCT
+
+SELECT DISTINCT Country FROM Customers;
+SELECT DISTINCT COUNT(Country) FROM Customers;
+SELECT DISTINCT COUNT(Country) FROM Customers HAVING COUNT(Country) > 10;
+
+
+# Operators AND OR NOT
+SELECT Name FROM Customers WHERE Country IN ('US', 'NL') OR Country IS NULL;
+SELECT * FROM Customers WHERE Country NOT IN ('US') AND Name LIKE 'a%';
+
+
+# ORDER BY
+SELECT * FROM Customers WHERE Country IS NOT NULL ORDER BY Date ASC;
+
+# DELETE 
+DELETE FROM Cutomers WHERE Name IN ('John');
+
+# LIMIT MIN MAX
+SELECT * FROM Customers LIMIT 10;
+SELECT MIN(Price) AS MinimumPrice FROM Customers;
+SELECT MAX(Price) AS MaximumPrice FROM Customers;
+
+# COUNT AVG SUM
+SELECT COUNT(Country) AS CountryCount FROM Customers;
+SELECT AVG(Price) AS AveragePrice FROM Customers;
+SELECT SUM(Price) AS TotalPrice FROM Customers;
+
+
+# LIKE
+SELECT * FROM Customers WHERE Name LIKE 'b_a%';
+SELECT * FROM Customers WHERE Name LIKE '[a-z]%';
+
+
+# LEFT JOIN
+SELECT Customers.Name, Orders.Id FROM Customers LEFT JOIN Orders ON Customers.Id=Orders.CustomerId;
+
+# RIGHT JOIN
+SELECT Orders.Id, Customers.Name FROM Orders RIGHT JOIN Customers ON Orders.CustomerId=Customers.Id;
+
+# INNER JOIN
+SELECT Customer.Name, Orders.Id FROM Customers JOIN Orders ON Customers.Id=Orders.CustomerId WHERE Country NOT IN ('US');
+
+# SELF JOIN
+SELECT A.Name AS CustomersA, B.Name AS CustomersB FROM Customers A, Customers B WHERE A.Name <> B.Name;
+
+# UNION
+SELECT Customers.Name FROM Customers
+UNION
+SELECT Employees.Name FROM Orders
+
+
+# GROUP BY
+SELECT COUNT(CustomerId), Country FROM Customers GROUP BY Country;
+
+# BETWEEN
+SELECT * FROM Customers WHERE Price BETWEEN 1 AND 20;
+
+# HAVING. Since WHERE cannot be used with Aggregate functions.
+SELECT COUNT(CustomerId), Country FROM Customers GROUP BY Country HAVING COUNT(CustomerId) > 10;
+
+# SELECT INTO
+SELECT INTO Customers 
+
+# EXISTS
+SELECT * FROM CUSTOMERS WHERE EXISTS (SELECT Id FROM Products WHERE Name LIKE 'a%')
